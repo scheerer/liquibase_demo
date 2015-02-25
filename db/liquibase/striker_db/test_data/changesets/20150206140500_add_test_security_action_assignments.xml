@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="20150206140500_add_test_security_action_assignments" author="russell.scheerer" context="development, test">
+        <sql>
+            INSERT INTO ngen_security_role_actions (
+            id,
+            security_role_id,
+            security_action_id
+            )
+            VALUES
+            --ALL USER MANAGEMENT ACTIONS FOR DEVELOPERS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'ADD_USER_ACCOUNT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'EDIT_USER_ACCOUNT')),
+            --ALL FLOORPLAN ACTIONS FOR DEVELOPERS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'VIEW_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'UPDATE_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'EDIT_VIN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'REQUEST_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'COMPLETE_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'UPDATE_FLOORPLAN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'ADD_FLOORPLAN_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name = 'VIEW_TITLE_HISTORY')),
+            --TSM actions FOR DEVELOPERS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name ='ADD_TSM_COMMENT')),
+            --Buisness Actions FOR DEVELOPERS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name ='ADD_BUSINESS_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGC Administrative'), (SELECT id FROM ngen_security_actions WHERE name ='VIEW_COLLATERAL_PROTECTION')),
+            --USER MANAGEMENT ACTIONS FOR NGEN RECORDS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'ADD_USER_ACCOUNT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'EDIT_USER_ACCOUNT')),
+            --FLOORPLAN ACTIONS FOR NGEN RECORDS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'VIEW_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'UPDATE_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'EDIT_VIN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'REQUEST_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'COMPLETE_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'UPDATE_FLOORPLAN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'ADD_FLOORPLAN_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name = 'VIEW_TITLE_HISTORY')),
+            --TSM actions FOR NGEN RECORDS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name ='ADD_TSM_COMMENT')),
+            --Buisness Actions FOR NGEN RECORDS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Records'), (SELECT id FROM ngen_security_actions WHERE name ='ADD_BUSINESS_COMMENT')),
+            --USER MANAGEMENT ACTIONS FOR NGEN FLOORPLANS--
+            (newID(), (SELECT id FROM security_roles WHERE name = 'NGEN Floorplans'), (SELECT id FROM ngen_security_actions WHERE name = 'ADD_USER_ACCOUNT')),
+
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='ADD_BUSINESS_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='ADD_FLOORPLAN_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='ADD_USER_ACCOUNT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='COMPLETE_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='EDIT_USER_ACCOUNT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='EDIT_VIN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='REQUEST_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='UPDATE_FLOORPLAN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='UPDATE_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='VIEW_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - View Only'), (SELECT id FROM ngen_security_actions WHERE name='VIEW_TITLE_HISTORY')),
+
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='ADD_BUSINESS_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='ADD_FLOORPLAN_COMMENT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='ADD_USER_ACCOUNT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='COMPLETE_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='EDIT_USER_ACCOUNT')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='EDIT_VIN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='REQUEST_TITLE_HOLD')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='UPDATE_FLOORPLAN')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='UPDATE_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='VIEW_TITLE')),
+            (newID(), (SELECT id FROM security_roles WHERE name = 'QA - All - Edit Only'), (SELECT id FROM ngen_security_actions WHERE name='VIEW_TITLE_HISTORY'));
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="2015-02-25 08:56:45" author="rscheerer">
+        <comment>
+            Adding teams and players
+        </comment>
+
+        <!-- Some raw SQL mixed with XML DSL -->
+        <sql>
+            CREATE TABLE [dbo].[teams] (
+            [id] UNIQUEIDENTIFIER CONSTRAINT DF_teams_id DEFAULT 'newID()' NOT NULL,
+            [league_id] UNIQUEIDENTIFIER NOT NULL,
+            [name] NVARCHAR(MAX) NOT NULL,
+            [active] BIT CONSTRAINT DF_teams_active DEFAULT 1 NOT NULL,
+            [created_at] DATETIME CONSTRAINT DF_teams_created_at DEFAULT GETDATE() NOT NULL,
+            [updated_at] DATETIME CONSTRAINT DF_teams_updated_at DEFAULT GETDATE() NOT NULL,
+            CONSTRAINT [PK_TEAMS] PRIMARY KEY ([id])
+            );
+
+            ALTER TABLE [dbo].[teams] WITH CHECK ADD CONSTRAINT [fk_team_league] FOREIGN KEY([league_id]) REFERENCES [dbo].[leagues] (id);
+        </sql>
+
+        <createTable tableName="players">
+            <column name="id" type="uuid" defaultValue="newID()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="team_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_player_team" references="teams(id)"/>
+            </column>
+            <column name="first_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueDate="GETDATE()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueDate="GETDATE()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            DROP TABLE [dbo].[teams];
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
