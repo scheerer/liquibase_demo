@@ -7,4 +7,5 @@
     <!-- real changesets go here -->
     <include file="changesets/20150224150755_add_leagues.xml" relativeToChangelogFile="true"/>
     <include file="changesets/20150225085645_add_teams_and_players.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/20150225214618_add_test_leagues_and_players.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="2015-02-25 21:46:18" author="rscheerer" context="development, test">
+        <comment>
+            Adding some test data
+        </comment>
+
+        <sql>
+            -- Leagues
+            INSERT INTO [leagues] ([name]) VALUES ('Ladies Night');
+            INSERT INTO [leagues] ([name]) VALUES ('Co-ed Night');
+            INSERT INTO [leagues] ([name]) VALUES ('Thirsty Thursday');
+
+            -- Teams
+            INSERT INTO [teams] ([league_id], [name]) VALUES ((SELECT [id] FROM [leagues] WHERE name = 'Co-ed Night'), 'Spare Me');
+            INSERT INTO [teams] ([league_id], [name]) VALUES ((SELECT [id] FROM [leagues] WHERE name = 'Co-ed Night'), 'Snakes on a Lane');
+
+            INSERT INTO [teams] ([league_id], [name]) VALUES ((SELECT [id] FROM [leagues] WHERE name = 'Thirsty Thursday'), 'Ebowla');
+            INSERT INTO [teams] ([league_id], [name]) VALUES ((SELECT [id] FROM [leagues] WHERE name = 'Thirsty Thursday'), 'Bi-Polar Rollers');
+
+            -- Playas
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Spare Me'), 'Andre', 'Young');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Spare Me'), 'Calvin', 'Broadus');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Snakes on a Lane'), 'Dave', 'Matthews');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Snakes on a Lane'), 'Tim', 'Reynolds');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Ebowla'), 'James', 'Hetfield');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Ebowla'), 'Kirk', 'Hammit');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Bi-Polar Rollers'), 'David', 'Gilmour');
+            INSERT INTO [players] ([team_id], [first_name], [last_name]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Bi-Polar Rollers'), 'Roger', 'Waters');
+        </sql>
+
+        <rollback>
+            DELETE FROM [players];
+            DELETE FROM [teams];
+            DELETE FROM [leagues];
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
