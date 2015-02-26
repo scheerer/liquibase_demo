@@ -9,4 +9,5 @@
     <include file="changesets/20150225085645_add_teams_and_players.xml" relativeToChangelogFile="true"/>
     <include file="changesets/20150225214618_add_test_leagues_and_players.xml" relativeToChangelogFile="true"/>
     <include file="changesets/20150225231517_rename_players_to_bowlers.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/20150225232157_add_games.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
