@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+  <changeSet id="2015-02-25 23:21:57" author="rscheerer">
+    <comment>
+      Adding games
+    </comment>
+    <sql>
+      CREATE TABLE [dbo].[games] (
+      [id] UNIQUEIDENTIFIER CONSTRAINT DF_games_id DEFAULT newID() NOT NULL,
+      [team_id] UNIQUEIDENTIFIER NOT NULL,
+      [score] INT NOT NULL,
+      CONSTRAINT [PK_GAMES] PRIMARY KEY ([id])
+      );
+
+      ALTER TABLE [dbo].[games] WITH CHECK ADD CONSTRAINT [fk_game_team] FOREIGN KEY([team_id]) REFERENCES [dbo].[teams] (id);
+    </sql>
+    <rollback>
+      DROP TABLE [dbo].[games];
+    </rollback>
+  </changeSet>
+
+  <changeSet id="2015-02-25 23:24:57" author="rscheerer" context="development, test">
+    <comment>
+      Adding games
+    </comment>
+    <sql>
+      -- Games
+      INSERT INTO [games] ([team_id], [score]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Spare Me'), 401);
+      INSERT INTO [games] ([team_id], [score]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Snakes on a Lane'), 200);
+      INSERT INTO [games] ([team_id], [score]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Ebowla'), 500);
+      INSERT INTO [games] ([team_id], [score]) VALUES ((SELECT [id] FROM [teams] WHERE name = 'Bi-Polar Rollers'), 404);
+    </sql>
+    <rollback>
+      DELETE FROM [dbo].[games];
+    </rollback>
+  </changeSet>
+</databaseChangeLog>
